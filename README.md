@@ -3,7 +3,7 @@
 
 ## about
 
-Alexa rank web sites according to popularity. Below are some instructions on how to run an application that will provide the rankings as a RESTful API. Also see [![fnarg blog](https://www.fnarg.net/blog/)]
+[Alexa](https://www.alexa.com/) rank web sites according to popularity. Below are some instructions on how to run an application that will provide the Alexa rankings as a RESTful API. 
 
 ## dependencies
 
@@ -21,12 +21,12 @@ Import one million records into mongo.
 bash-3.2$ sudo mongoimport --type=csv --headerline -c=rankings --file=src/main/resources/top-1m.csv
 ```
 
-Let's start the mongo daemon
+Start the mongo daemon
 ```
 mongod
 ```
 
-And then use the mongo shell to run a test query that the API will need to support.
+And then use the mongo shell to run a test query, similar to one that the API will need to support.
 
 ```
 > db.rankings.find( { domain: /^bbc.co/ } )
@@ -36,7 +36,7 @@ There should be two records in the result set.
 
 ## application
 
-The key depencies in the pom are show below.
+The key dependencies in the pom are show below.
 ```
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -66,17 +66,17 @@ Once built with maven as a clean package, the app was run as a jar
 java -jar target/gs-rest-service-0.1.0.jar
 ```
 
-The console output from Spring Boot should have something similar to
+The console output from Spring Boot should be something similar to
 ```
 number of records found: 1000000
 2017-10-08 22:17:42.987  INFO 807 --- [main] net.fnarg.api.Application: Started Application in 17.238 seconds
 ```
 
-This is to tell you that Spring was able to connect to mongo and find the rankings collection.
+The number of records is calculated by DbReader.java and is there to tell us that Spring was able to connect to mongo and find the rankings collection.
 
 ## testing
 
-To test that Spring Boot is running okay, let's run our same query over http.
+To test that Spring Boot is ready, let's run the same bbc.co query over http.
 
 ```
 bash-3.2$ curl -v http://localhost:8080/rankings?query=bbc.co
